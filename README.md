@@ -139,3 +139,7 @@ The official documentation websites returned proxy 403 responses in this cloud e
 - [Next.js proxy reference](https://github.com/vercel/next.js/blob/canary/docs/01-app/03-api-reference/03-file-conventions/proxy.mdx)
 
 Review the current hosted documentation when configuring your actual Supabase and deployment project, particularly email templates and redirect allowlists.
+
+## GitHub handoff
+
+Implementation branch: `feat/studybridge-mvp`. Review [PR #1](https://github.com/jisun129/studybridge/pull/1), targeting `main`. The initially empty repository needed a shared base; `main` contains only an empty bootstrap commit, and no application code was merged into it. GitHub automatically chose the first pushed feature branch as default. An API request to set `main` as default was denied (HTTP 403); the repository owner should select `main` under Settings → General → Default branch. No website was deployed and the PR is unmerged.

@@ -32,7 +32,11 @@ Credentials were absent: `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_PUBLI
 
 Official documentation sites returned proxy 403. Official Supabase/OpenAI/Next.js GitHub sources were fetched and consulted. Draft networking additions are saved for environment settings; draft saving does not itself apply runtime networking or publish an environment. Add your exact Supabase project API hostname after selecting the project.
 
-The remote repository initially had no refs/commits, including no `main` base. Git read access worked. A read-only GitHub API request returned `Forbidden`; the CLI also reported unusable API authentication. An empty baseline commit (`541ec92138cafeb254f9f42390cb26366b8d2005`) is preserved locally as `main`, with the app implementation on `feat/studybridge-mvp`. The default branch has not been merged into or pushed to. Actual feature push and PR outcomes are recorded after the operation.
+The remote repository initially had no refs/commits, including no `main` base. Native Git read and push access worked. The implementation was committed and pushed on `feat/studybridge-mvp`. The first PR attempt failed because `main` did not exist. Only the empty bootstrap commit (`541ec92138cafeb254f9f42390cb26366b8d2005`) was then published as `main`, giving the feature a common base without merging application code.
+
+PR creation succeeded: https://github.com/jisun129/studybridge/pull/1 (base `main`, head `feat/studybridge-mvp`). No merge, force-push, website deployment or LinkedIn publication occurred. Repository diffs were reviewed for secrets and unrelated work; only placeholder configuration is committed. The working tree was clean after implementation.
+
+Because this was an empty remote, GitHub automatically selected the first pushed feature branch as its default. The attempted API change to default `main` failed with HTTP 403, `Resource not accessible by integration`. **The repository owner should set Settings → General → Default branch to `main`.** The PR is already created and can be reviewed without changing that setting. Initial read-only GitHub API access also returned `Forbidden`, while the later scoped PR creation worked; permissions are operation-specific.
 
 ## Reusable cloud configuration
 
