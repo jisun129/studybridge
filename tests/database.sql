@@ -10,12 +10,17 @@ create function auth.uid() returns uuid language sql stable as $$ select nullif(
 grant usage on schema auth,public,extensions to authenticated,anon;
 grant execute on function auth.uid() to authenticated,anon;
 insert into auth.users values('00000000-0000-0000-0000-000000000001'),('00000000-0000-0000-0000-000000000002');
+alter default privileges in schema public grant all on tables to anon, authenticated;
 \ir ../supabase/migrations/202610120001_studybridge.sql
 set local role authenticated;
 select set_config('request.jwt.claim.sub','00000000-0000-0000-0000-000000000001',true);
 insert into public.vocabulary(user_id,expression,meaning,usage,source_sentence,source_translation,examples,material_title,created_at)
 values(auth.uid(),' Significant ','유의한','통계적 의미','The result is significant.','결과는 유의하다.','[{"english":"Example one.","korean":"예문 1."},{"english":"Example two.","korean":"예문 2."}]','Statistics','2000-01-01');
 do $$ begin
+ begin
+  update public.vocabulary set meaning='Unauthorized update';
+  raise exception 'Update privilege should be revoked';
+ exception when insufficient_privilege then null; end;
  if (select count(*) from public.vocabulary) <> 1 then raise exception 'Owner cannot read own record'; end if;
  if (select created_at from public.vocabulary limit 1) < now()-interval '1 minute' then raise exception 'Caller controlled timestamp'; end if;
  begin

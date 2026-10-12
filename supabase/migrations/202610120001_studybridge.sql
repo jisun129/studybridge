@@ -19,7 +19,7 @@ alter table public.vocabulary add column source_hash text generated always as (e
 create unique index vocabulary_context_unique on public.vocabulary (user_id, normalized_expression, source_hash);
 create index vocabulary_recent on public.vocabulary(user_id,created_at desc);
 alter table public.vocabulary enable row level security;
-revoke all on public.vocabulary from anon;
+revoke all on public.vocabulary from public, anon, authenticated;
 grant select, insert, delete on public.vocabulary to authenticated;
 create policy vocabulary_read on public.vocabulary for select to authenticated using ((select auth.uid())=user_id);
 create policy vocabulary_save on public.vocabulary for insert to authenticated with check ((select auth.uid())=user_id);
@@ -35,7 +35,7 @@ create table public.ai_request_windows (
  primary key (user_id,window_start)
 );
 alter table public.ai_request_windows enable row level security;
-revoke all on public.ai_request_windows from anon, authenticated;
+revoke all on public.ai_request_windows from public, anon, authenticated;
 create function public.consume_ai_request() returns boolean language plpgsql security definer set search_path = '' as $$
 declare n integer; uid uuid := auth.uid();
 begin
